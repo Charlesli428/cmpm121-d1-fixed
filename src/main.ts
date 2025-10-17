@@ -29,7 +29,7 @@ setInterval(() => {
 
 //Step 4
 let lastTime = performance.now();
-const growthRate = 1;
+let growthRate = 0;
 
 function update(time: number) {
   const delta = (time - lastTime) / 1000;
@@ -37,6 +37,26 @@ function update(time: number) {
 
   counter += growthRate * delta;
   counterDiv.textContent = `Total Aura: ${counter.toFixed(1)}`;
+  if (counter >= 10) {
+    upgradeButton.disabled = false;
+  } else {
+    upgradeButton.disabled = true;
+  }
+
   requestAnimationFrame(update);
 }
 requestAnimationFrame(update);
+
+//Step 5
+const upgradeButton = document.createElement("button");
+upgradeButton.textContent = "Buy Upgrade (10 Aura Points)";
+upgradeButton.disabled = true;
+app.append(upgradeButton);
+
+upgradeButton.addEventListener("click", () => {
+  if (counter >= 10) {
+    counter -= 10;
+    growthRate += 1;
+    counterDiv.textContent = `Total Aura: ${counter.toFixed(1)}`;
+  }
+});
