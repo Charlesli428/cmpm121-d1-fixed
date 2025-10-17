@@ -18,3 +18,5 @@ button.addEventListener("click", () => {
   counter += 1;
   counterDiv.textContent = `Total Aura: ${counter}`;
 });
+
+//Step 3
