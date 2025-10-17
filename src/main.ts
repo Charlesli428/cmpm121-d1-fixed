@@ -20,3 +20,7 @@ button.addEventListener("click", () => {
 });
 
 //Step 3
+setInterval(() => {
+  counter += 1;
+  counterDiv.textContent = `Total Aura: ${counter}`;
+}, 1000);
