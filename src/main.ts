@@ -15,6 +15,10 @@ let growthRate = 0;
 let upgrade1Count = 0;
 let upgrade2Count = 0;
 let upgrade3Count = 0;
+let upgrade1Cost = 10;
+let upgrade2Cost = 100;
+let upgrade3Cost = 1000;
+
 const counterDiv = document.createElement("div");
 counterDiv.textContent = `Total Aura: ${counter}`;
 app.append(counterDiv);
@@ -46,23 +50,30 @@ function update(time: number) {
   lastTime = time;
   countDiv.textContent =
     `✨Glow Up:${upgrade1Count} 💪Lift Weights:${upgrade2Count} 😎Increase Charisma:${upgrade3Count}`;
+  upgradeButton.textContent =
+    `✨: +0.1 Passive Aura (${upgrade1Cost} Aura Points)`;
+  upgradeButton2.textContent =
+    `💪: +2 Passive Aura (${upgrade2Cost} Aura Points)`;
+  upgradeButton3.textContent =
+    `😎: +50 Passive Aura (${upgrade3Cost} Aura Points)`;
+
   counter += growthRate * delta;
   counterDiv.textContent = `Total Aura: ${counter.toFixed(1)}`;
   rateDiv.textContent = `Growth Rate: ${growthRate.toFixed(1)} Aura/sec`;
 
-  if (counter >= 10) {
+  if (counter >= upgrade1Cost) {
     upgradeButton.disabled = false;
   } else {
     upgradeButton.disabled = true;
   }
 
-  if (counter >= 100) {
+  if (counter >= upgrade2Cost) {
     upgradeButton2.disabled = false;
   } else {
     upgradeButton2.disabled = true;
   }
 
-  if (counter >= 1000) {
+  if (counter >= upgrade3Cost) {
     upgradeButton3.disabled = false;
   } else {
     upgradeButton3.disabled = true;
@@ -73,13 +84,15 @@ requestAnimationFrame(update);
 
 //Step 5
 const upgradeButton = document.createElement("button");
-upgradeButton.textContent = "✨: +0.1 Passive Aura (10 Aura Points)";
+upgradeButton.textContent =
+  `✨: +0.1 Passive Aura (${upgrade1Cost} Aura Points)`;
 upgradeButton.disabled = true;
 app.append(upgradeButton);
 
 upgradeButton.addEventListener("click", () => {
-  if (counter >= 10) {
-    counter -= 10;
+  if (counter >= upgrade1Cost) {
+    counter -= upgrade1Cost;
+    upgrade1Cost *= 1.15;
     growthRate += 0.1;
     upgrade1Count += 1;
     counterDiv.textContent = `Total Aura: ${counter.toFixed(1)}`;
@@ -88,13 +101,15 @@ upgradeButton.addEventListener("click", () => {
 
 //Step 6
 const upgradeButton2 = document.createElement("button");
-upgradeButton2.textContent = "💪: +2 Passive Aura (100 Aura Points)";
+upgradeButton2.textContent =
+  `💪: +2 Passive Aura (${upgrade2Cost} Aura Points)`;
 upgradeButton2.disabled = true;
 app.append(upgradeButton2);
 
 upgradeButton2.addEventListener("click", () => {
-  if (counter >= 100) {
-    counter -= 100;
+  if (counter >= upgrade2Cost) {
+    counter -= upgrade2Cost;
+    upgrade2Cost *= 1.15;
     growthRate += 2;
     upgrade2Count += 1;
     counterDiv.textContent = `Total Aura: ${counter.toFixed(1)}`;
@@ -102,13 +117,15 @@ upgradeButton2.addEventListener("click", () => {
 });
 
 const upgradeButton3 = document.createElement("button");
-upgradeButton3.textContent = "😎: +50 Passive Aura (1000 Aura Points)";
+upgradeButton3.textContent =
+  `😎: +50 Passive Aura (${upgrade3Cost} Aura Points)`;
 upgradeButton3.disabled = true;
 app.append(upgradeButton3);
 
 upgradeButton3.addEventListener("click", () => {
-  if (counter >= 1000) {
-    counter -= 1000;
+  if (counter >= upgrade3Cost) {
+    counter -= upgrade3Cost;
+    upgrade3Cost *= 1.15;
     growthRate += 50;
     upgrade3Count += 1;
     counterDiv.textContent = `Total aura: ${counter.toFixed(1)}`;
