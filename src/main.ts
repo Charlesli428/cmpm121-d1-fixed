@@ -20,7 +20,23 @@ button.addEventListener("click", () => {
 });
 
 //Step 3
+/*
 setInterval(() => {
   counter += 1;
   counterDiv.textContent = `Total Aura: ${counter}`;
 }, 1000);
+*/
+
+//Step 4
+let lastTime = performance.now();
+const growthRate = 1;
+
+function update(time: number) {
+  const delta = (time - lastTime) / 1000;
+  lastTime = time;
+
+  counter += growthRate * delta;
+  counterDiv.textContent = `Total Aura: ${counter.toFixed(1)}`;
+  requestAnimationFrame(update);
+}
+requestAnimationFrame(update);
