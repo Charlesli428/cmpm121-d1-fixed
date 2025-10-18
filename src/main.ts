@@ -18,11 +18,34 @@ interface Item {
   cost: number;
   rate: number;
   count: number;
+  button?: HTMLButtonElement;
+  description: string;
 }
 const upgrades: Item[] = [
-  { name: "Glow Up", emoji: "✨", cost: 10, rate: 0.1, count: 0 },
-  { name: "Lift Weights", emoji: "💪", cost: 100, rate: 2, count: 0 },
-  { name: "Increase Charisma", emoji: "😎", cost: 1000, rate: 50, count: 0 },
+  {
+    name: "Glow Up",
+    emoji: "✨",
+    cost: 10,
+    rate: 0.1,
+    count: 0,
+    description: "Polish your vibe and start radiating confidence.",
+  },
+  {
+    name: "Lift Weights",
+    emoji: "💪",
+    cost: 100,
+    rate: 2,
+    count: 0,
+    description: "Pump iron to boost your physical aura strength.",
+  },
+  {
+    name: "Increase Charisma",
+    emoji: "😎",
+    cost: 1000,
+    rate: 50,
+    count: 0,
+    description: "Charm everyone with effortless social glow.",
+  },
 ];
 
 const counterDiv = document.createElement("div");
@@ -46,7 +69,7 @@ upgrades.forEach((item) => {
   btn.disabled = true;
   shopDiv.append(btn);
 
-  (item as any).button = btn;
+  item.button = btn;
 
   btn.addEventListener("click", () => {
     if (counter >= item.cost) {
@@ -93,7 +116,9 @@ function update(time: number) {
   rateDiv.textContent = `Growth Rate: ${growthRate.toFixed(1)} Aura/sec`;
 
   upgrades.forEach((item) => {
-    (item as any).button.disabled = counter < item.cost;
+    if (item.button) {
+      item.button.disabled = counter < item.cost;
+    }
   });
   requestAnimationFrame(update);
 }
