@@ -46,6 +46,22 @@ const upgrades: Item[] = [
     count: 0,
     description: "Charm everyone with effortless social glow.",
   },
+  {
+    name: "Get Rich",
+    emoji: "💸",
+    cost: 10000,
+    rate: 300,
+    count: 0,
+    description: "Wealth amplifies your aura—luxury radiates power.",
+  },
+  {
+    name: "Get Famous",
+    emoji: "🌟",
+    cost: 100000,
+    rate: 1500,
+    count: 0,
+    description: "Your name is well known everywhere. ",
+  },
 ];
 
 const counterDiv = document.createElement("div");
@@ -65,7 +81,7 @@ app.append(shopDiv);
 upgrades.forEach((item) => {
   const btn = document.createElement("button");
   btn.textContent =
-    `${item.emoji}: +${item.rate} Passive Aura (${item.cost} Aura Points)`;
+    `${item.emoji}: +${item.rate} Passive Aura (${item.cost} Aura Points) - ${item.description}`;
   btn.disabled = true;
   shopDiv.append(btn);
 
