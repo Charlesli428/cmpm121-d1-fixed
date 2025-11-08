@@ -4,14 +4,16 @@ document.body.innerHTML = "";
 const app = document.createElement("div");
 document.body.append(app);
 
-//Step 1
+// Step 1
 const button = document.createElement("button");
 button.textContent = "🔥";
+button.classList.add("main-button");
 app.append(button);
 
-//Step 2
-let counter: number = 0;
-let growthRate = 0;
+// Step 2
+let auraCount: number = 0;
+let passiveAura = 0;
+
 interface Item {
   name: string;
   emoji: string;
@@ -21,6 +23,7 @@ interface Item {
   button?: HTMLButtonElement;
   description: string;
 }
+
 const upgrades: Item[] = [
   {
     name: "Glow Up",
@@ -60,133 +63,86 @@ const upgrades: Item[] = [
     cost: 100000,
     rate: 1500,
     count: 0,
-    description: "Your name is well known everywhere. ",
+    description: "Your name is well known everywhere.",
   },
 ];
 
+// Aura counter display
 const counterDiv = document.createElement("div");
-counterDiv.textContent = `Total Aura: ${counter}`;
+counterDiv.textContent = `Total Aura: ${auraCount}`;
 app.append(counterDiv);
+
+// Click to gain aura
 button.addEventListener("click", () => {
-  counter += 100;
-  counterDiv.textContent = `Total Aura: ${counter}`;
+  auraCount += 100;
+  counterDiv.textContent = `Total Aura: ${auraCount}`;
 });
 
+// Passive rate display
 const rateDiv = document.createElement("div");
-rateDiv.textContent = `Passive Aura Gain: ${growthRate.toFixed(1)} Aura/sec`;
+rateDiv.textContent = `Passive Aura Gain: ${passiveAura.toFixed(1)} Aura/sec`;
 app.append(rateDiv);
+
+// Owned upgrades display
 const countDiv = document.createElement("div");
+
+// Shop
 const shopDiv = document.createElement("div");
 app.append(shopDiv);
+
+// Build shop buttons
 upgrades.forEach((item) => {
-  const btn = document.createElement("button");
-  btn.textContent =
+  const upgradeButton = document.createElement("button");
+  upgradeButton.textContent =
     `${item.emoji}: +${item.rate} Passive Aura (${item.cost} Aura Points) - ${item.description}`;
-  btn.disabled = true;
-  shopDiv.append(btn);
+  upgradeButton.disabled = true;
+  shopDiv.append(upgradeButton);
 
-  item.button = btn;
+  item.button = upgradeButton;
 
-  btn.addEventListener("click", () => {
-    if (counter >= item.cost) {
-      counter -= item.cost;
-      growthRate += item.rate;
+  upgradeButton.addEventListener("click", () => {
+    if (auraCount >= item.cost) {
+      auraCount -= item.cost;
+      passiveAura += item.rate;
       item.count += 1;
       item.cost *= 1.15;
-      counterDiv.textContent = `Total Aura: ${counter.toFixed(1)}`;
-      btn.textContent = `${item.emoji}: +${item.rate} Passive Aura (${
-        item.cost.toFixed(0)
+
+      counterDiv.textContent = `Total Aura: ${auraCount.toFixed(1)}`;
+
+      upgradeButton.textContent = `${item.emoji}: +${item.rate} Passive Aura (${
+        item.cost.toFixed(
+          0,
+        )
       } Aura Points)`;
     }
   });
 });
+
+// Show counts of each purchased upgrade
 countDiv.textContent = upgrades
   .map((u) => `${u.emoji}${u.name}:${u.count}`)
   .join(" ");
 app.append(countDiv);
-//Step 3
-/*
-setInterval(() => {
-counter += 1;
-counterDiv.textContent = `Total Aura: ${counter}`;
-}, 1000);
-*/
 
-//Step 4
+// Game loop
 let lastTime = performance.now();
 
 function update(time: number) {
   const delta = (time - lastTime) / 1000;
   lastTime = time;
-  /*countDiv.textContent =
-    `✨Glow Up:${upgrade1Count} 💪Lift Weights:${upgrade2Count} 😎Increase Charisma:${upgrade3Count}`;
-  upgradeButton.textContent =
-    `✨: +0.1 Passive Aura (${upgrade1Cost} Aura Points)`;
-  upgradeButton2.textContent =
-    `💪: +2 Passive Aura (${upgrade2Cost} Aura Points)`;
-  upgradeButton3.textContent =
-    `😎: +50 Passive Aura (${upgrade3Cost} Aura Points)`;
-  */
-  counter += growthRate * delta;
-  counterDiv.textContent = `Total Aura: ${counter.toFixed(1)}`;
-  rateDiv.textContent = `Growth Rate: ${growthRate.toFixed(1)} Aura/sec`;
+
+  auraCount += passiveAura * delta;
+
+  counterDiv.textContent = `Total Aura: ${auraCount.toFixed(1)}`;
+  rateDiv.textContent = `Growth Rate: ${passiveAura.toFixed(1)} Aura/sec`;
 
   upgrades.forEach((item) => {
     if (item.button) {
-      item.button.disabled = counter < item.cost;
+      item.button.disabled = auraCount < item.cost;
     }
   });
+
   requestAnimationFrame(update);
 }
+
 requestAnimationFrame(update);
-
-//Step 5
-/*const upgradeButton = document.createElement("button");
-upgradeButton.textContent =
-  `✨: +0.1 Passive Aura (${upgrade1Cost} Aura Points)`;
-upgradeButton.disabled = true;
-app.append(upgradeButton);
-
-upgradeButton.addEventListener("click", () => {
-  if (counter >= upgrade1Cost) {
-    counter -= upgrade1Cost;
-    upgrade1Cost *= 1.15;
-    growthRate += 0.1;
-    upgrade1Count += 1;
-    counterDiv.textContent = `Total Aura: ${counter.toFixed(1)}`;
-  }
-});
-
-//Step 6
-const upgradeButton2 = document.createElement("button");
-upgradeButton2.textContent =
-  `💪: +2 Passive Aura (${upgrade2Cost} Aura Points)`;
-upgradeButton2.disabled = true;
-app.append(upgradeButton2);
-
-upgradeButton2.addEventListener("click", () => {
-  if (counter >= upgrade2Cost) {
-    counter -= upgrade2Cost;
-    upgrade2Cost *= 1.15;
-    growthRate += 2;
-    upgrade2Count += 1;
-    counterDiv.textContent = `Total Aura: ${counter.toFixed(1)}`;
-  }
-});
-
-const upgradeButton3 = document.createElement("button");
-upgradeButton3.textContent =
-  `😎: +50 Passive Aura (${upgrade3Cost} Aura Points)`;
-upgradeButton3.disabled = true;
-app.append(upgradeButton3);
-
-upgradeButton3.addEventListener("click", () => {
-  if (counter >= upgrade3Cost) {
-    counter -= upgrade3Cost;
-    upgrade3Cost *= 1.15;
-    growthRate += 50;
-    upgrade3Count += 1;
-    counterDiv.textContent = `Total aura: ${counter.toFixed(1)}`;
-  }
-});
-*/

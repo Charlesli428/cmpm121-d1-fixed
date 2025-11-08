@@ -3,3 +3,18 @@
   vertical-align: top;
   border: 1px solid salmon;
 }
+.main-button {
+  font-size: 5rem; /* makes the emoji large */
+  width: 200px; /* you can adjust */
+  height: 200px;
+  border-radius: 50%; /* makes it round */
+  background: radial-gradient(circle, #ffebc2 0%, #ffb347 80%);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255, 160, 0, 0.7);
+  transition: transform 0.1s, box-shadow 0.2s;
+}
+
+.main-button:hover {
+  box-shadow: 0 0 30px rgba(255, 200, 0, 1);
+}
