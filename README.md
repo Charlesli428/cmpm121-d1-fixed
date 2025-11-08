@@ -1,3 +1,19 @@
-# CMPM 121 D1 Project
+# CMPM 121 – D1 Incremental Game
 
-This is the starting point for your CMPM 121 D1 project. The goal of this project is to create a simple web application using TypeScript, Vite, and modern web development practices. Students should make sure to remove _this_ content from their README.md file and replace it with their own project documentation.
+A simple incremental (clicker) game built in TypeScript using Deno + Vite.\
+The player gains "Aura" by clicking and purchasing upgrades that increase passive aura generation.
+
+## Features
+
+- 🔥 Click to earn Aura
+- ✨ Five themed upgrades:
+  - Glow Up
+  - Lift Weights
+  - Increase Charisma
+  - Get Rich
+  - Become Famous
+
+# Inspiration
+
+From https://kupodupo.github.io/CMPM-121-D1-Incremental-Game/ for main button design
+From https://mydoot.github.io/cmpm-121-d1/ for background color design

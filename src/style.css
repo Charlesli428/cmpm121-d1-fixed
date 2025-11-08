@@ -18,3 +18,15 @@
 .main-button:hover {
   box-shadow: 0 0 30px rgba(255, 200, 0, 1);
 }
+
+body {
+  background: linear-gradient(180deg, #fff8e1 0%, #ffe0b2 100%);
+  /* ↑ warm golden aura gradient */
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* makes it fill the screen */
+}
